@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Logout</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f87171 0%, #fbbf24 40%, #34d399 70%, #6366f1 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .glass-logout {
+      background: rgba(255,255,255,0.32);
+      box-shadow: 0 8px 32px 0 rgba(99,102,241,0.18);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 40px;
+      border: 2px solid rgba(99,102,241,0.18);
+      padding: 64px 52px 52px 52px;
+      width: 420px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .glass-logout::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: -40px;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, #f87171 60%, transparent 100%);
+      opacity: 0.25;
+      z-index: 0;
+    }
+    .glass-logout::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, #6366f1 60%, transparent 100%);
+      opacity: 0.25;
+      z-index: 0;
+    }
+    .glass-logout h1 {
+      color: #f87171;
+      margin-bottom: 32px;
+      font-size: 2.4rem;
+      font-weight: 700;
+      text-shadow: 0 2px 12px rgba(99,102,241,0.12);
+      position: relative;
+      z-index: 1;
+    }
+    .glass-logout p {
+      color: #6366f1;
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 1;
+    }
+    .glass-logout button {
+      background: linear-gradient(90deg, #fbbf24 0%, #34d399 100%);
+      color: #fff;
+      border: none;
+      border-radius: 16px;
+      padding: 16px 44px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 16px rgba(99,102,241,0.12);
+      margin-top: 12px;
+      transition: background 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+    .glass-logout button:hover {
+      background: linear-gradient(90deg, #34d399 0%, #fbbf24 100%);
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-logout">
+    <h1>Logged Out</h1>
+    <p>You have been successfully logged out.<br>Thank you for shopping with <span style="color:#fbbf24;font-weight:700;">FitGrocery</span>!</p>
+    <button onclick="window.location.href='login.html'">Return to Login</button>
+  </div>
+  <script src="js/logout.js"></script>
+</body>
+</html>

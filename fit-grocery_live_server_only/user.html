@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div style="background: linear-gradient(120deg, #6366f1 0%, #e0e7ff 100%); min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif;">
+    <header style="display: flex; align-items: center; justify-content: space-between; padding: 24px 48px; background: rgba(30,41,59,0.85); color: #fff; box-shadow: 0 4px 24px rgba(30,41,59,0.12); border-radius: 0 0 24px 24px;">
+      <div style="font-size: 2rem; font-weight: bold; letter-spacing: 2px;">FitGrocery</div>
+      <nav>
+        <a href="cart.html" style="color: #fff; margin-right: 24px; text-decoration: none; font-weight: 500;">Cart</a>
+        <a href="track.html" style="color: #fff; margin-right: 24px; text-decoration: none; font-weight: 500;">Track Order</a>
+        <a href="logout.html" style="color: #fff; text-decoration: none; font-weight: 500;">Logout</a>
+      </nav>
+    </header>
+
+    <main style="max-width: 1200px; margin: 48px auto; background: rgba(255,255,255,0.18); border-radius: 32px; box-shadow: 0 8px 32px rgba(30,41,59,0.18); padding: 40px; backdrop-filter: blur(16px);">
+      <h2 style="font-size: 2.5rem; color: #6366f1; margin-bottom: 32px; font-weight: 700; text-shadow: 0 2px 8px rgba(99,102,241,0.08);">Grocery Deals for You</h2>
+      <div id="grocery-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 36px;">
+        <!-- 15 Grocery Items -->
+      </div>
+
+      <!-- Cart section removed. Cart is now only shown on the cart page. -->
+    </main>
+
+    <footer style="text-align: center; padding: 32px; color: #6366f1; background: rgba(224,231,255,0.7); margin-top: 56px; border-radius: 0 0 32px 32px; font-size: 1.1rem; font-weight: 500; letter-spacing: 1px;">
+      &copy; 2025 FitGrocery. All rights reserved.
+    </footer>
+  </div>
+  <script>
+    // 15 grocery items
+    const items = [
+      { name: 'Fresh Apples', price: 99, unit: 'kg', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Organic Tomatoes', price: 49, unit: 'kg', img: 'https://images.unsplash.com/photo-1464306076886-debede1a7b8a?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Basmati Rice', price: 79, unit: 'kg', img: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Milk (1L)', price: 55, unit: 'L', img: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Brown Bread', price: 35, unit: 'loaf', img: 'https://images.unsplash.com/photo-1506089676908-3592f7389d4d?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Bananas', price: 45, unit: 'dozen', img: 'https://images.unsplash.com/photo-1574226516831-e1dff420e8e7?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Potatoes', price: 30, unit: 'kg', img: 'https://images.unsplash.com/photo-1500315331616-db2aecd8a6b7?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Onions', price: 40, unit: 'kg', img: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Eggs', price: 60, unit: 'dozen', img: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Butter', price: 80, unit: '500g', img: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Paneer', price: 120, unit: '500g', img: 'https://images.unsplash.com/photo-1464306076886-debede1a7b8a?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Spinach', price: 35, unit: 'bunch', img: 'https://images.unsplash.com/photo-1500315331616-db2aecd8a6b7?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Chicken Breast', price: 180, unit: 'kg', img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Orange Juice', price: 65, unit: '1L', img: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80' },
+      { name: 'Cucumber', price: 25, unit: 'kg', img: 'https://images.unsplash.com/photo-1464306076886-debede1a7b8a?auto=format&fit=crop&w=400&q=80' }
+    ];
+
+    const groceryList = document.getElementById('grocery-list');
+    function renderItems() {
+      groceryList.innerHTML = items.map((item, idx) => `
+        <div style="background: rgba(255,255,255,0.32); border-radius: 20px; padding: 28px; text-align: center; box-shadow: 0 4px 24px rgba(99,102,241,0.10); transition: transform 0.2s; backdrop-filter: blur(8px); border: 1px solid rgba(99,102,241,0.08);">
+          <img src="${item.img}" alt="${item.name}" style="width: 110px; height: 110px; object-fit: cover; border-radius: 50%; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(99,102,241,0.10);">
+          <h3 style="margin: 0 0 10px 0; color: #6366f1; font-size: 1.25rem; font-weight: 600;">${item.name}</h3>
+          <p style="margin: 0 0 12px 0; color: #334155; font-size: 1.1rem; font-weight: 500;">₹${item.price} / ${item.unit}</p>
+          <button onclick="addToCart(${idx})" style="background: linear-gradient(90deg, #6366f1 0%, #10b981 100%); color: #fff; border: none; border-radius: 8px; padding: 10px 28px; font-weight: 600; font-size: 1rem; cursor: pointer; box-shadow: 0 2px 8px rgba(99,102,241,0.10); transition: background 0.2s;">Add to Cart</button>
+        </div>
+      `).join('');
+    }
+
+    window.addToCart = function(idx) {
+      const cart = JSON.parse(localStorage.getItem('fitgrocery_cart') || '{}');
+      cart[idx] = (cart[idx] || 0) + 1;
+      localStorage.setItem('fitgrocery_cart', JSON.stringify(cart));
+    }
+
+    renderItems();
+  </script>
+</body>
+</html>

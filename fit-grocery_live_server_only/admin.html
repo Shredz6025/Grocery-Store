@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: linear-gradient(135deg, #6366f1 0%, #34d399 100%); min-height: 100vh; font-family: 'Segoe UI', Arial, sans-serif;">
+  <div style="max-width: 1200px; margin: 48px auto; background: rgba(255,255,255,0.18); border-radius: 32px; box-shadow: 0 8px 32px rgba(30,41,59,0.18); padding: 40px; backdrop-filter: blur(16px);">
+    <h1 style="color: #6366f1; font-size: 2.5rem; font-weight: 700; margin-bottom: 32px; text-align: center;">Admin Dashboard</h1>
+    <h2 style="color: #10b981; font-size: 1.5rem; font-weight: 600; margin-bottom: 18px;">Item Order Counts</h2>
+    <table style="width:100%; border-collapse:collapse; margin-bottom:40px; background:rgba(255,255,255,0.32); border-radius:16px; overflow:hidden;">
+      <thead>
+        <tr style="background:#6366f1; color:#fff;">
+          <th style="padding:12px;">Item</th>
+          <th style="padding:12px;">Times Ordered</th>
+        </tr>
+      </thead>
+      <tbody id="item-counts"></tbody>
+    </table>
+
+    <h2 style="color: #f87171; font-size: 1.5rem; font-weight: 600; margin-bottom: 18px;">Order Records</h2>
+    <table style="width:100%; border-collapse:collapse; margin-bottom:24px; background:rgba(255,255,255,0.32); border-radius:16px; overflow:hidden;">
+      <thead>
+        <tr style="background:#f87171; color:#fff;">
+          <th style="padding:12px;">User Name</th>
+          <th style="padding:12px;">Cart Items</th>
+          <th style="padding:12px;">Total Price</th>
+        </tr>
+      </thead>
+      <tbody id="order-records"></tbody>
+    </table>
+    <button onclick="downloadCSV()" style="background: linear-gradient(90deg, #6366f1 0%, #10b981 100%); color: #fff; border: none; border-radius: 12px; padding: 14px 36px; font-size: 1.1rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 12px rgba(99,102,241,0.10); margin-top: 12px; transition: background 0.2s;">Download Orders as CSV</button>
+  </div>
+  <script>
+    // Demo data: items
+    const items = [
+      { name: 'Fresh Apples', price: 99 },
+      { name: 'Organic Tomatoes', price: 49 },
+      { name: 'Basmati Rice', price: 79 },
+      { name: 'Milk (1L)', price: 55 },
+      { name: 'Brown Bread', price: 35 },
+      { name: 'Bananas', price: 45 },
+      { name: 'Potatoes', price: 30 },
+      { name: 'Onions', price: 40 },
+      { name: 'Eggs', price: 60 },
+      { name: 'Butter', price: 80 },
+      { name: 'Paneer', price: 120 },
+      { name: 'Spinach', price: 35 },
+      { name: 'Chicken Breast', price: 180 },
+      { name: 'Orange Juice', price: 65 },
+      { name: 'Cucumber', price: 25 }
+    ];
+
+    // Demo: orders stored in localStorage as 'fitgrocery_orders'
+    function getOrders() {
+      return JSON.parse(localStorage.getItem('fitgrocery_orders') || '[]');
+    }
+
+    // Count item orders
+    function getItemCounts(orders) {
+      const counts = Array(items.length).fill(0);
+      orders.forEach(order => {
+        Object.entries(order.cart).forEach(([idx, qty]) => {
+          counts[idx] += qty;
+        });
+      });
+      return counts;
+    }
+
+    function renderItemCounts() {
+      const orders = getOrders();
+      const counts = getItemCounts(orders);
+      const tbody = document.getElementById('item-counts');
+      tbody.innerHTML = items.map((item, idx) => {
+        const count = counts[idx] || 0;
+        return `
+          <tr>
+            <td style='padding:10px; color:#6366f1; font-weight:600;'>${item.name}</td>
+            <td style='padding:10px; color:#10b981; font-weight:700;'>${count}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderOrderRecords() {
+      const orders = getOrders();
+      const tbody = document.getElementById('order-records');
+      if (orders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan='3' style='padding:16px; color:#6366f1; text-align:center;'>No orders placed yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = orders.map(order => {
+        const cartItems = Object.entries(order.cart).map(([idx, qty]) => `${items[idx].name} (x${qty})`).join(', ');
+        const total = Object.entries(order.cart).reduce((sum, [idx, qty]) => sum + items[idx].price * qty, 0);
+        return `
+          <tr>
+            <td style='padding:10px; color:#f87171; font-weight:600;'>${order.username}</td>
+            <td style='padding:10px; color:#6366f1;'>${cartItems}</td>
+            <td style='padding:10px; color:#10b981; font-weight:700;'>₹${total}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function downloadCSV() {
+      const orders = getOrders();
+      let csv = 'User Name,Cart Items,Total Price\n';
+      orders.forEach(order => {
+        const cartItems = Object.entries(order.cart).map(([idx, qty]) => `${items[idx].name} (x${qty})`).join('; ');
+        const total = Object.entries(order.cart).reduce((sum, [idx, qty]) => sum + items[idx].price * qty, 0);
+        csv += `"${order.username}","${cartItems}","${total}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'fitgrocery_orders.csv';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    renderItemCounts();
+    renderOrderRecords();
+  </script>
+</body>
+</html>

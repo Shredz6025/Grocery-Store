@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Track Order</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: linear-gradient(120deg, #6366f1 0%, #e0e7ff 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .glass-track {
+      background: rgba(255,255,255,0.22);
+      box-shadow: 0 8px 32px 0 rgba(99,102,241,0.18);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 32px;
+      border: 1px solid rgba(99,102,241,0.12);
+      padding: 56px 48px 48px 48px;
+      width: 400px;
+      text-align: center;
+    }
+    .glass-track h1 {
+      color: #6366f1;
+      margin-bottom: 32px;
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-shadow: 0 2px 8px rgba(99,102,241,0.08);
+    }
+    .glass-track button {
+      background: linear-gradient(90deg, #6366f1 0%, #10b981 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(99,102,241,0.10);
+      margin-top: 24px;
+      transition: background 0.2s;
+    }
+    .glass-track button:hover {
+      background: #4338ca;
+    }
+    #trackMsg {
+      margin-top: 32px;
+      color: #10b981;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(16,185,129,0.08);
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-track">
+    <h1>Track Order</h1>
+    <button id="trackBtn">Track My Order</button>
+    <div id="trackMsg"></div>
+  </div>
+  <script>
+    document.getElementById('trackBtn').onclick = function() {
+      document.getElementById('trackMsg').textContent = 'Order arriving in 10 minutes';
+    }
+  </script>
+</body>
+</html>
